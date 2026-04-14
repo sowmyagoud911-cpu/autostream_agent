@@ -9,11 +9,19 @@ knowledge = load_knowledge()
 def get_answer(query):
     query = query.lower()
 
-    # FIX: handle more variations
-    if any(word in query for word in ["price", "pricing", "plan", "cost"]):
-        return knowledge["pricing"]
+    # 🎯 SPECIFIC PRO PLAN REQUEST
+    if "pro" in query:
+        return "Pro Plan: $79/month, unlimited videos, 4K resolution, AI captions."
 
-    if any(word in query for word in ["policy", "refund", "support"]):
-        return knowledge["policies"]
+    # 🎯 BASIC PLAN REQUEST
+    if "basic" in query:
+        return "Basic Plan: $29/month, 10 videos/month, 720p resolution."
+
+    # 🎯 GENERAL PRICING
+    if any(word in query for word in ["price", "pricing", "plan", "cost"]):
+        return (
+            "Basic Plan: $29/month, 10 videos/month, 720p resolution.\n"
+            "Pro Plan: $79/month, unlimited videos, 4K resolution, AI captions."
+        )
 
     return "I don't have that information."

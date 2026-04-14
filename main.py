@@ -12,14 +12,13 @@ try:
         user_input = input("You: ")
 
         if user_input.lower() == "exit":
-            print("👋 Exiting AutoStream. Goodbye!")
+            print("👋 Exiting AutoStream...")
             break
 
         state["user_input"] = user_input
-
         state = graph.invoke(state)
 
-        print("Bot:", state["response"])
+        print("Bot:", state.get("response", "⚠️ No response generated"))
 
 except KeyboardInterrupt:
     print("\n👋 Exiting AutoStream (Ctrl+C detected). Goodbye!")

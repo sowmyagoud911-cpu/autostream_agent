@@ -5,46 +5,31 @@ from agent.tools import mock_lead_capture
 
 
 def intent_node(state):
-    user_input = state["user_input"]
+    user_input = state["user_input"].strip().lower()
 
-    # STEP 1: Detect intent
     intent = detect_intent(user_input)
     state["intent"] = intent
 
-    # STEP 2: Greeting
-    if intent == "greeting":
-        state["response"] = "Hi! Welcome to AutoStream 🚀"
+    # =========================
+    # 🧠 1. LEAD FLOW (PRIORITY FIRST)
+    # =========================
+    if state.get("collecting"):
 
-    # STEP 3: Pricing / Info → RAG
-    elif intent == "pricing":
-        answer = get_answer(user_input)
-        state["response"] = answer + "\n\n👉 Would you like to get started with a plan?"
-
-    # STEP 4: High Intent → START FORM (IMPORTANT FIX)
-    elif intent == "high_intent":
-        state["collecting"] = "name"   # START FROM NAME (FIX)
-        state["response"] = "Great! Let's get you started 🚀\n\nWhat is your name?"
-
-    # STEP 5: Lead Collection Flow
-    elif state.get("collecting"):
-
-        # NAME STEP
         if state["collecting"] == "name":
             state["name"] = user_input
             state["collecting"] = "email"
             state["response"] = "Please provide your email."
+            return state
 
-        # EMAIL STEP
         elif state["collecting"] == "email":
             state["email"] = user_input
             state["collecting"] = "platform"
             state["response"] = "Which platform? (YouTube/Instagram)"
+            return state
 
-        # PLATFORM STEP → FINAL TOOL CALL
         elif state["collecting"] == "platform":
             state["platform"] = user_input
 
-            # CALL TOOL ONLY HERE (correct behavior)
             mock_lead_capture(
                 state["name"],
                 state["email"],
@@ -53,6 +38,21 @@ def intent_node(state):
 
             state["collecting"] = None
             state["response"] = "🎉 You're successfully registered!"
+            return state
+
+    # =========================
+    # 🧠 2. NORMAL INTENT FLOW
+    # =========================
+    if intent == "greeting":
+        state["response"] = "Hi! Welcome to AutoStream 🚀"
+
+    elif intent == "pricing":
+        state["response"] = get_answer(user_input)
+        state["response"] += "\n\n👉 Would you like to start?"
+
+    elif intent == "high_intent":
+        state["collecting"] = "name"
+        state["response"] = "Great! Let's start 🚀\nWhat is your name?"
 
     else:
         state["response"] = "Can you clarify?"
@@ -60,14 +60,11 @@ def intent_node(state):
     return state
 
 
-# BUILD GRAPH
 def build_graph():
     graph = StateGraph(dict)
 
     graph.add_node("intent", intent_node)
-
     graph.set_entry_point("intent")
-
     graph.set_finish_point("intent")
 
     return graph.compile()

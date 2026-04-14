@@ -9,7 +9,7 @@ Intent classification
 RAG-based knowledge retrieval
 Multi-turn memory
 Controlled tool execution (lead capture)
----
+
 
 ## 🧠 Features
 🔍 Intent Detection (Greeting / Pricing / High Intent)
@@ -17,7 +17,7 @@ Controlled tool execution (lead capture)
 🧠 Multi-turn Conversation Memory (State Management)
 🛠️ Tool Execution (Lead Capture Function)
 🤖 LLM-powered fallback using ChatGroq (LLaMA 3.1)
----
+
 
 ## ⚙️ Tech Stack
 Python 3.9+
@@ -26,7 +26,7 @@ LangGraph
 ChatGroq (LLaMA 3.1)
 JSON-based RAG system
 dotenv for environment variables
----
+
 
 ## ▶️ How to Run
 1. Clone Repository

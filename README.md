@@ -1,33 +1,43 @@
 # 🚀 AutoStream AI Agent – Social-to-Lead Workflow
 
 ## 🚀 Overview
-This project implements a conversational AI agent that converts user interactions into qualified leads.
+AutoStream AI Agent is a conversational AI system built for a SaaS product that converts user conversations into qualified business leads.
 
+It simulates a real-world AI sales assistant using:
+
+Intent classification
+RAG-based knowledge retrieval
+Multi-turn memory
+Controlled tool execution (lead capture)
 ---
 
 ## 🧠 Features
-- Intent Detection (Greeting, Inquiry, High Intent)
-- RAG-based Knowledge Retrieval (JSON)
-- Multi-turn Memory (State Management)
-- Lead Capture Tool Execution
-
+🔍 Intent Detection (Greeting / Pricing / High Intent)
+📚 RAG-based Knowledge Retrieval (JSON Knowledge Base)
+🧠 Multi-turn Conversation Memory (State Management)
+🛠️ Tool Execution (Lead Capture Function)
+🤖 LLM-powered fallback using ChatGroq (LLaMA 3.1)
 ---
 
 ## ⚙️ Tech Stack
-- Python 3
-- LangChain
-- LangGraph
-- ChatGroq (LLM)
-- JSON-based RAG
-
+Python 3.9+
+LangChain
+LangGraph
+ChatGroq (LLaMA 3.1)
+JSON-based RAG system
+dotenv for environment variables
 ---
 
 ## ▶️ How to Run
-1. Clone the repository  
-2. Install dependencies:
-```bash
+1. Clone Repository
+git clone https://github.com/your-username/autostream_agent.git
+cd autostream_agent
+2. Install Dependencies
 pip install -r requirements.txt
-3. Run:
+3. Set Environment Variables
+Create a .env file:
+GROQ_API_KEY=your_api_key_here
+4. Run:
    python main.py
 
 ## 🏗️ Architecture
@@ -56,33 +66,22 @@ Agent processes intent + state
 Response is sent back via Twilio API
 
 ## Expected Conversation Flow
-Step 1: Greeting
-
-User: "Hi"
-Bot: Welcome message
-
-Step 2: Pricing Inquiry (RAG)
-
-User: "Tell me pricing"
-Bot: Returns pricing from JSON knowledge base
-
-Step 3: Intent Shift
-
-User: "I want Pro plan for YouTube"
-Bot: Detects high intent
-
-Step 4: Lead Qualification
-
-Bot asks:
-
-Name
-Email
-Platform
-Step 5: Tool Execution
-
-After collecting all data:
-
-Lead is stored using mock_lead_capture()
+Step-by-Step Workflow 
+1. Greeting 
+○ User: “Hi, tell me about your pricing.” 
+2. Knowledge Retrieval (RAG) 
+○ Agent retrieves pricing from the knowledge base 
+○ Agent responds accurately 
+3. Intent Shift 
+○ User: “That sounds good, I want to try the Pro plan for my YouTube channel.” 
+4. Lead Qualification 
+○ Agent detects high-intent 
+○ Agent asks for: 
+■ Name 
+■ Email 
+5. Tool Execution 
+○ Once all details are collected 
+○ Agent calls mock_lead_capture() 
 
 🧠 State Management:
 Each user is identified by phone number (session ID)

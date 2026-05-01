@@ -65,23 +65,32 @@ Message is passed to LangGraph agent
 Agent processes intent + state
 Response is sent back via Twilio API
 
-## Expected Conversation Flow
-Step-by-Step Workflow 
-1. Greeting 
-○ User: “Hi, tell me about your pricing.” 
-2. Knowledge Retrieval (RAG) 
-○ Agent retrieves pricing from the knowledge base 
-○ Agent responds accurately 
-3. Intent Shift 
-○ User: “That sounds good, I want to try the Pro plan for my YouTube channel.” 
-4. Lead Qualification 
-○ Agent detects high-intent 
-○ Agent asks for: 
-■ Name 
-■ Email 
-5. Tool Execution 
-○ Once all details are collected 
-○ Agent calls mock_lead_capture() 
+## 🔄 Expected Conversation Flow
+
+### 1. Greeting
+
+User: "Hi, tell me about your pricing"
+
+### 2. Knowledge Retrieval (RAG)
+
+Agent shows pricing details from knowledge base
+
+### 3. Intent Shift
+
+User: "I want to try the Pro plan"
+
+### 4. Lead Collection
+
+Agent asks:
+
+* Name
+* Email
+* Platform
+
+### 5. Tool Execution
+
+Agent saves lead using `mock_lead_capture()`
+
 
 🧠 State Management:
 Each user is identified by phone number (session ID)
@@ -99,3 +108,11 @@ Stateful multi-turn conversation
 Controlled tool execution
 
 It simulates a real-world SaaS WhatsApp AI lead generation assistant.
+
+## 🎯 Why This Project is Good
+
+* Uses LangGraph for structured AI workflow
+* Uses RAG to avoid wrong answers
+* Collects leads like real SaaS product
+* Demonstrates production-level AI design
+
